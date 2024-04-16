@@ -47,16 +47,16 @@ jobs:
 
       - name: Initialization environment
         env:
-          url_sdk: https://archive.openwrt.org/releases/23.05.3/targets/x86/64/openwrt-sdk-23.05.3-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
+          url_sdk: https://archive.openwrt.org/releases/21.02.5/targets/x86/64/openwrt-sdk-21.02.5-x86-64_gcc-8.4.0_musl.Linux-x86_64.tar.xz
         run: |
           wget ${{ env.url_sdk }}
           file_name=$(echo ${{env.url_sdk}} | awk -F/ '{print $NF}')
           mkdir sdk && tar -xJf $file_name -C ./sdk --strip-components=1
           cd sdk  
-          echo "src-git base https://github.com/openwrt/openwrt.git;openwrt-23.05" > feeds.conf
-          echo "src-git-full packages https://github.com/openwrt/packages.git;openwrt-23.05" >> feeds.conf
-          echo "src-git-full luci https://git.openwrt.org/project/luci.git;openwrt-23.05" >> feeds.conf
-          echo "src-git-full routing https://git.openwrt.org/feed/routing.git;openwrt-23.05"  >> feeds.conf
+          echo "src-git base https://github.com/openwrt/openwrt.git;openwrt-21.02" > feeds.conf
+          echo "src-git-full packages https://github.com/openwrt/packages.git;openwrt-21.02" >> feeds.conf
+          echo "src-git-full luci https://git.openwrt.org/project/luci.git;openwrt-21.02" >> feeds.conf
+          echo "src-git-full routing https://git.openwrt.org/feed/routing.git;openwrt-21.02"  >> feeds.conf
           git clone https://github.com/${{ github.repository }}.git package/downloads/luci-app-rakitiw
           ./scripts/feeds update -a
           for package in ${{ steps.list_package.outputs.content}}; do
