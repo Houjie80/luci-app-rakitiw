@@ -143,6 +143,156 @@ foreach ($linesnetwork as $linenetwork) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Modem</title>
+    <style>
+		.tbody {
+			display: flex; 
+			flex-direction: column; 
+			justify-content: center;
+			min-height: 0vh; 
+			color: black; 
+			background-image:url(img/re.jpg);
+			background-size: cover;
+			-webkit-background-size: cover;
+			background-repeat: no-repeat;
+		}
+		
+		.btn {
+			-moz-appearance: none;
+			cursor: pointer;
+			margin: 5px;
+			align-items: center;
+			border: 2px solid #132130 ;
+			border-radius: 3px;
+			background: #132130;
+		}
+
+		.btn:hover, .btn:focus {
+			color: #000000;
+			outline: 0;
+		}
+		.geser {
+			border-color: #132130;
+			color: #121EF6;
+			padding: 3px 20px;
+			background-image: linear-gradient(180deg, red, yellow, green);
+			background-position: 100%;
+			background-size: 400%;
+			transition: background 30ms ease-in-out;
+			width: 200px;
+			height: 35px;
+			align: center;
+		}
+		
+		.geser:hover {
+			 background-position: 0;
+		}
+
+		.script_txt {
+			text-align: left;
+			font-family: cursive;
+			font-weight: bold;			
+			color: #000;
+			border: 8px;
+			border-radius: 10px;
+			background: hsla(0, 0%, 100%, .3);
+			align-items: center;
+			width: 395px;
+			height: 50px;
+		}
+
+		.col-butt {
+			text-align: center;
+			border: 5px;
+			align-items: center;
+		}
+
+		.inline-block {
+			display: inline-block;
+			text-align: left;
+			margin: 5px;
+			top: 0px;
+		}
+		
+		.box_script {
+			width: 450px;
+			align-items: center;
+			border: none;
+			border-radius: 10px;
+			margin: 3% auto;
+			padding: 10px 10px;
+			background-color: black;
+			box-shadow: 0px 0px 5px 2px #132130;
+		}
+		
+		footer {
+			background: linear-gradient(
+    to right, 
+    #A6CE37, #ECE71C, #0FC6E6, #F95D44, #816271, #9F1958, #081B6A, #59D7EE);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 800px;
+  background-position: center 0%;
+  animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+    font-size: 20px;
+}
+@keyframes rainbow_animation {
+    0%,100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}
+		
+		.blink { 
+			-webkit-animation: blink .75s linear infinite; 
+			-moz-animation: blink .75s linear infinite; 
+			-ms-animation: blink .75s linear infinite; 
+			-o-animation: blink .75s linear infinite; 
+			animation: blink .75s linear infinite; 
+			color: #00ACD0; 
+			font-weight: bold; 
+		} 
+
+		@-webkit-keyframes blink { 
+			0% { opacity: 1; } 
+			50% { opacity: 1; } 
+			50.01% { opacity: 0; } 
+			100% { opacity: 0; } 
+		} 
+
+		@-moz-keyframes blink { 
+			0% { opacity: 1; }
+			50% { opacity: 1; }
+			50.01% { opacity: 0; } 
+			100% { opacity: 0; } 
+		}
+ 
+		@-ms-keyframes blink { 
+			0% { opacity: 1; } 
+			5O% { opacity: 1; }
+			50.01% { opacity: 0; } 
+			100% { opacity: 0; }
+		}
+ 
+		@-o-keyframes blink 
+			0% { opacity: 1; } 
+			50% { opacity: 1; }
+			50.01% { opacity: 0; } 
+			100% { opacity: 0; }
+		}
+ 
+		@keyframes blink { 
+			0% { opacity: 1; } 
+			50% opacity: 1; }
+			50.01% { opacity: 0;} 
+			100% { opacity: 0; } 
+		}
+		
+</style>
     <?php
     include ("head.php");
     exec('chmod -R 755 /usr/bin/rakitanmanager.sh');
@@ -167,7 +317,7 @@ foreach ($linesnetwork as $linenetwork) {
     </script>
 </head>
 
-<body>
+<body class="box_script" style="text-align:center">
     <div id="app">
         <?php include ('navbar.php'); ?>
         <form id="myForm" method="POST" class="mt-5">
@@ -190,23 +340,35 @@ foreach ($linesnetwork as $linenetwork) {
                                         </div>
                                         <br>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <?php if ($variables['modem_status'] == 'Enabled'): ?>
+                                                <span class="geser">Status: <span class="text-success">
+                                                    <?= $variables['modem_status'] ?>
+                                                </span></span>
+                                            <?php else: ?>
+                                                <span class="geser">Status: <span class="text-danger">
+                                                    <?= $variables['modem_status'] ?>
+                                                </span></span>
+                                            <?php endif; ?>
+                                        </div>
                                     <div class="container-fluid">
                                         <div class="container mt-5">
 
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <button type="button" class="btn btn-primary btn-block mb-3"
+                                                        <button type="button" class="geser"
                                                             data-toggle="modal" data-target="#tambahModemModal" <?php if ($variables['modem_status'] == 'Enabled')
                                                                 echo 'disabled'; ?>>Tambah Modem</button>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <form method="POST">
                                                             <?php if ($variables['modem_status'] == 'Enabled'): ?>
-                                                                <button type="submit" class="btn btn-danger btn-block mb-3"
+                                                                <button type="submit" class="btn geser"
                                                                     name="disable">Stop Modem</button>
                                                             <?php else: ?>
-                                                                <button type="submit" class="btn btn-success btn-block mb-3"
+                                                                <button type="submit" class="btn geser"
                                                                     name="enable" <?php echo $start_button_disabled; ?>>Start Modem</button>
                                                             <?php endif; ?>
                                                         </form>
@@ -243,7 +405,7 @@ foreach ($linesnetwork as $linenetwork) {
                                             <form method="POST" class="mt-5">
                                                 <div class="row">
                                                     <div class="col pt-2">
-                                                        <pre id="logContent" class="form-control text-left"
+                                                        <pre id="logContent" class="geser"
                                                             style="height: 200px; width: auto; font-size:80%; background-image-position: center; background-color: #f8f9fa "></pre>
                                                     </div>
                                                 </div>
@@ -460,7 +622,6 @@ foreach ($linesnetwork as $linenetwork) {
                         </div>
                     </div>
                 </div>
-                <?php include ('footer.php'); ?>
             </div>
         </form>
     </div>
@@ -657,6 +818,7 @@ foreach ($linesnetwork as $linenetwork) {
             return true;
         }
     </script>
+    <?php include ('footer.php'); ?>
 </body>
 
 </html>
