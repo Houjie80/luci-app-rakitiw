@@ -4,7 +4,7 @@
 log_file="/var/log/rakitanmanager.log"
 exec 1>>"$log_file" 2>&1
 log() {
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1"
+    echo "<span style=\"color: red\">[$(date '+%d-%m-%Y %H:%M:%S')]</span> - $1"
 }
 
 modem_status="Disabled"
@@ -88,6 +88,10 @@ perform_ping() {
                 fi
             fi
         done
+         if [ "$status_Internet" = true ]; then
+            attempt=1
+            log "Lanjut NgePING..."
+        fi
 
         if [ "$status_Internet" = false ]; then
             if [ "$jenis" = "rakitan" ]; then
