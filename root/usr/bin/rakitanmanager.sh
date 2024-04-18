@@ -88,8 +88,6 @@ perform_ping() {
                 fi
             fi
         done
-        
-        if [ "$status_Internet" = true ]; then
             attempt=1
             log "Lanjut NgePING..."
         fi
