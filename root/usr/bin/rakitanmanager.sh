@@ -7,7 +7,7 @@ log() {
     echo "<span style=\"color: red\">[$(date '+%d-%m-%Y %H:%M:%S')]</span> - $1"
 }
 
-modem_status="Disabled"
+modem_status="Enabled"
 
 # Baca file JSON
 json_file="/www/rakitiw/data_modem.json"
@@ -66,7 +66,8 @@ perform_ping() {
         fi
 
         status_Internet=false
-
+        
+        
         for pinghost in $host; do
             if [ "$devicemodem" = "" ]; then
                 ping -q -c 3 -W 3 ${pinghost} > /dev/null
@@ -88,10 +89,12 @@ perform_ping() {
                 fi
             fi
         done
+        
+        if [ "$status_Internet" = true ]; then
             attempt=1
             log "Lanjut NgePING..."
         fi
-
+        
         if [ "$status_Internet" = false ]; then
             if [ "$jenis" = "rakitan" ]; then
                 log "[$jenis - $nama] Internet mati. Percobaan $attempt/$max_attempts"
@@ -164,7 +167,7 @@ main() {
 rakitiw_stop() {
     # Hentikan skrip jika sedang berjalan
     if pidof rakitanmanager.sh > /dev/null; then
-        modem_status="Disabled"
+        modem_status="Enabled"
         killall -9 rakitanmanager.sh
         log "Rakitiw Berhasil Di Hentikan."
     else
