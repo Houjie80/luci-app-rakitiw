@@ -144,13 +144,13 @@ foreach ($linesnetwork as $linenetwork) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Modem</title>
     <style>
-		.tbody {
+		.body {
 			display: flex; 
 			flex-direction: column; 
 			justify-content: center;
 			min-height: 0vh; 
 			color: black; 
-			background-image:url(img/re.jpg);
+			background-image: url("../img/re.jpg");
 			background-size: cover;
 			-webkit-background-size: cover;
 			background-repeat: no-repeat;
@@ -182,12 +182,24 @@ foreach ($linesnetwork as $linenetwork) {
 			height: 35px;
 			align: center;
 		}
-		
+		.gesert {
+			border-color: #132130;
+			color: #121EF6;
+			padding: 3px 20px;
+			background-image: linear-gradient(180deg, red, yellow, green);
+			background-position: 100%;
+			background-size: 400%;
+			transition: background 30ms ease-in-out;
+			width: 200px;
+			height: 35px;
+			margin: 5px;
+			align: center;
+		}
 		.geser:hover {
 			 background-position: 0;
 		}
 
-		.script_txt {
+		script_txt {
 			text-align: left;
 			font-family: cursive;
 			font-weight: bold;			
@@ -350,7 +362,26 @@ foreach ($linesnetwork as $linenetwork) {
                                                 <span class="geser">Status: <span class="text-danger">
                                                     <?= $variables['modem_status'] ?>
                                                 </span></span>
-                                            <?php endif; ?>
+                                                <?php endif; ?>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                        	<span class="gesert">
+                                            <i class="fa fa-server"></i>
+                                            <span class="text-primary">IP: {{ wan_ip }}</span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 d-sm-block d-md-block d-lg-none">
+                                        	<span class="gesert">
+                                            <i class="fa fa-globe"></i>
+                                            <span class="text-primary">ISP: {{ wan_isp }}</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 pb-lg-1">
+                                        	<span class="gesert">
+                                            <i class="fa fa-flag-o"></i>
+                                            <span class="text-primary">Location : {{ wan_country }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
                                         </div>
                                     <div class="container-fluid">
                                         <div class="container mt-5">
@@ -626,6 +657,7 @@ foreach ($linesnetwork as $linenetwork) {
         </form>
     </div>
     <?php include ("javascript.php"); ?>
+    <script src="js/index.js"></script>
     <script>
         function editModem(index) {
             var modem = <?= json_encode($modems) ?>[index];
