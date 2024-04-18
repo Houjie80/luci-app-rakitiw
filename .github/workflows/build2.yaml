@@ -3,7 +3,7 @@ name: Build New IPK New
 on:
   push:
     branches:
-      - dev
+      - New
     paths:
      - MakeFile
   repository_dispatch:
@@ -15,14 +15,14 @@ env:
 
 jobs:
   job_build_rta:
-    name: Build RTA (dev)
+    name: Build HJ (New)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: dev
+          ref: New
 
       - name: Get PKG_VERSION from Makefile
         id: vars
@@ -32,7 +32,7 @@ jobs:
         id: list_package
         uses: jaywcjlove/github-action-read-file@main
         with:
-          branch: dev
+          branch: New
           path: list_packages.txt
 
       - name: Install packages
@@ -60,7 +60,7 @@ jobs:
             ./scripts/feeds install -d n "$package"
           done
 
-      - name: Configure RTA (dev)
+      - name: Configure HJ (New)
         run: |
           cd sdk
           for package in ${{ steps.list_package.outputs.content}}; do
@@ -68,7 +68,7 @@ jobs:
           done
           make defconfig
 
-      - name: Compile RTA (dev)
+      - name: Compile HJ (New)
         id: compile
         run: |
           cd sdk
