@@ -156,6 +156,18 @@ foreach ($linesnetwork as $linenetwork) {
 			background-repeat: no-repeat;
 		}
 		
+		.test {
+			display: flex; 
+			flex-direction: column; 
+			justify-content: center;
+			min-height: 0vh; 
+			color: black; 
+			background-image: url("../img/re.jpg");
+			background-size: cover;
+			-webkit-background-size: cover;
+			background-repeat: no-repeat;
+		}
+		
 		.btn {
 			-moz-appearance: none;
 			cursor: pointer;
@@ -303,6 +315,18 @@ foreach ($linesnetwork as $linenetwork) {
 			50.01% { opacity: 0;} 
 			100% { opacity: 0; } 
 		}
+		status {
+        clear:both;
+        #padding:5px 5px 5px 5px;
+        #margin-bottom:4px;
+        #font-size: 19px;
+        background-color: black;
+        border: 3px solid rgb(63,94,251);
+        border-radius: 9px;
+        #background-image: url('/luci-static/resources/openclash/img/                  backgroundfanspage.png');
+        #background-size: cover;
+        #background-repeat: no-repeat;
+        }
 		
 </style>
     <?php
@@ -337,8 +361,8 @@ foreach ($linesnetwork as $linenetwork) {
                 <div class="row py-2">
                     <div class="col-lg-8 col-md-9 mx-auto mt-3">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="text-center">
+                        	<table class="status">
+                            <div class="blink">
                                     <h4><i class="fa fa-home"></i> RAKITAN MANAGER</h4>
                                 </div>
                             </div>
@@ -437,7 +461,7 @@ foreach ($linesnetwork as $linenetwork) {
                                                 <div class="row">
                                                     <div class="col pt-2">
                                                         <pre id="logContent" class="geser"
-                                                            style="height: 200px; width: auto; font-size:80%; background-image-position: center; background-color: #f8f9fa "></pre>
+                                                            style="height: 200px; width: auto; font-size:80%; background-image-position: right; background-color: #f8f9fa "></pre>
                                                     </div>
                                                 </div>
                                             </form>
@@ -851,6 +875,7 @@ foreach ($linesnetwork as $linenetwork) {
         }
     </script>
     <?php include ('footer.php'); ?>
+    	</table>
 </body>
 
 </html>
