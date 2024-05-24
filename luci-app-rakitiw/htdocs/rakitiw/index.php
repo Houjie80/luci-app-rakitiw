@@ -1,5 +1,4 @@
 <?php
-
 // Lokasi file bash
 $bash_file = '/usr/bin/rakitanmanager.sh';
 
@@ -45,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tambah_modem"])) {
         "jenis" => $_POST["jenis"],
         "nama" => $_POST["nama"],
         "apn" => $_POST["apn"],
-        "portmodem" => $_POST["portmodem"],
         "interface" => $_POST["interface"],
+        "portat" => $_POST["portat"],
         "iporbit" => $_POST["iporbit"],
         "usernameorbit" => $_POST["usernameorbit"],
         "passwordorbit" => $_POST["passwordorbit"],
@@ -64,8 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_modem"])) {
     if (isset($modems[$index])) {
         $modems[$index]["nama"] = $_POST["edit_nama"];
         $modems[$index]["apn"] = $_POST["edit_apn"];
-        $modems[$index]["portmodem"] = $_POST["edit_portmodem"];
         $modems[$index]["interface"] = $_POST["edit_interface"];
+        $modems[$index]["portat"] = $_POST["edit_portat"];
         $modems[$index]["iporbit"] = $_POST["edit_iporbit"];
         $modems[$index]["usernameorbit"] = $_POST["edit_usernameorbit"];
         $modems[$index]["passwordorbit"] = $_POST["edit_passwordorbit"];
@@ -84,10 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["hapus_modem"])) {
         unset($modems[$index]);
         simpanDataModem($modems);
     }
-}
-
-if (isset($_POST['setup'])) {
-    shell_exec('/usr/bin/setuprakitiw.sh');
 }
 
 // Baca data modem
@@ -148,6 +143,192 @@ foreach ($linesnetwork as $linenetwork) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Modem</title>
+    <style>
+		.body {
+			display: flex; 
+			flex-direction: column; 
+			justify-content: center;
+			min-height: 0vh; 
+			color: black; 
+			background-image: url("../img/re.jpg");
+			background-size: cover;
+			-webkit-background-size: cover;
+			background-repeat: no-repeat;
+		}
+		
+		.test {
+			display: flex; 
+			flex-direction: column; 
+			justify-content: center;
+			min-height: 0vh; 
+			color: black; 
+			background-image: url("../img/re.jpg");
+			background-size: cover;
+			-webkit-background-size: cover;
+			background-repeat: no-repeat;
+		}
+		
+		.btn {
+			-moz-appearance: none;
+			cursor: pointer;
+			margin: 5px;
+			align-items: center;
+			border: 2px solid #132130 ;
+			border-radius: 3px;
+			background: #132130;
+		}
+
+		.btn:hover, .btn:focus {
+			color: #000000;
+			outline: 0;
+		}
+		.geser {
+			border-color: #132130;
+			color: #121EF6;
+			padding: 3px 20px;
+			background-image: linear-gradient(180deg, red, yellow, green);
+			background-position: 100%;
+			background-size: 400%;
+			transition: background 30ms ease-in-out;
+			width: 200px;
+			height: 35px;
+			align: center;
+		}
+		.gesert {
+			border-color: #132130;
+			color: #121EF6;
+			padding: 3px 20px;
+			background-image: linear-gradient(180deg, red, yellow, green);
+			background-position: 100%;
+			background-size: 400%;
+			transition: background 30ms ease-in-out;
+			width: 200px;
+			height: 35px;
+			margin: 5px;
+			align: center;
+		}
+		.geser:hover {
+			 background-position: 0;
+		}
+
+		script_txt {
+			text-align: left;
+			font-family: cursive;
+			font-weight: bold;			
+			color: #000;
+			border: 8px;
+			border-radius: 10px;
+			background: hsla(0, 0%, 100%, .3);
+			align-items: center;
+			width: 395px;
+			height: 50px;
+		}
+
+		.col-butt {
+			text-align: center;
+			border: 5px;
+			align-items: center;
+		}
+
+		.inline-block {
+			display: inline-block;
+			text-align: left;
+			margin: 5px;
+			top: 0px;
+		}
+		
+		.box_script {
+			width: 450px;
+			align-items: center;
+			border: none;
+			border-radius: 10px;
+			margin: 3% auto;
+			padding: 10px 10px;
+			background-color: black;
+			box-shadow: 0px 0px 5px 2px #132130;
+		}
+		
+		footer {
+			background: linear-gradient(
+    to right, 
+    #A6CE37, #ECE71C, #0FC6E6, #F95D44, #816271, #9F1958, #081B6A, #59D7EE);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 800px;
+  background-position: center 0%;
+  animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+    font-size: 20px;
+}
+@keyframes rainbow_animation {
+    0%,100% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 100% 0;
+    }
+}
+		
+		.blink { 
+			-webkit-animation: blink .75s linear infinite; 
+			-moz-animation: blink .75s linear infinite; 
+			-ms-animation: blink .75s linear infinite; 
+			-o-animation: blink .75s linear infinite; 
+			animation: blink .75s linear infinite; 
+			color: #00ACD0; 
+			font-weight: bold; 
+		} 
+
+		@-webkit-keyframes blink { 
+			0% { opacity: 1; } 
+			50% { opacity: 1; } 
+			50.01% { opacity: 0; } 
+			100% { opacity: 0; } 
+		} 
+
+		@-moz-keyframes blink { 
+			0% { opacity: 1; }
+			50% { opacity: 1; }
+			50.01% { opacity: 0; } 
+			100% { opacity: 0; } 
+		}
+ 
+		@-ms-keyframes blink { 
+			0% { opacity: 1; } 
+			5O% { opacity: 1; }
+			50.01% { opacity: 0; } 
+			100% { opacity: 0; }
+		}
+ 
+		@-o-keyframes blink 
+			0% { opacity: 1; } 
+			50% { opacity: 1; }
+			50.01% { opacity: 0; } 
+			100% { opacity: 0; }
+		}
+ 
+		@keyframes blink { 
+			0% { opacity: 1; } 
+			50% opacity: 1; }
+			50.01% { opacity: 0;} 
+			100% { opacity: 0; } 
+		}
+		status {
+        clear:both;
+        #padding:5px 5px 5px 5px;
+        #margin-bottom:4px;
+        #font-size: 19px;
+        background-color: black;
+        border: 3px solid rgb(63,94,251);
+        border-radius: 9px;
+        #background-image: url('/luci-static/resources/openclash/img/                  backgroundfanspage.png');
+        #background-size: cover;
+        #background-repeat: no-repeat;
+        }
+		
+</style>
     <?php
     include ("head.php");
     exec('chmod -R 755 /usr/bin/rakitanmanager.sh');
@@ -169,79 +350,10 @@ foreach ($linesnetwork as $linenetwork) {
                 });
             }, 1000);
         });
-        $(document).ready(function () {
-            // Fungsi untuk memeriksa koneksi internet
-            function checkConnection() {
-                return navigator.onLine;
-            }
-
-            // Fungsi untuk memeriksa pembaruan dari GitHub API
-            function checkUpdate() {
-                if (!checkConnection()) {
-                    // Jika tidak ada koneksi, hentikan proses
-                    return;
-                }
-
-                var latestVersionUrl = 'https://api.github.com/repos/rtaserver/luci-app-rakitiw/releases/latest';
-
-                $.get(latestVersionUrl, function (data) {
-                    var latestVersion = data.tag_name;
-                    var currentVersion = '<?php echo trim(file_get_contents("version.txt")); ?>';
-
-                    // Periksa jika versi terbaru berbeda dari versi saat ini
-                    if (latestVersion && latestVersion !== currentVersion) {
-                        // Tampilkan modal
-                        $('#updateModal').modal('show');
-
-                        // Load Changelog
-                        $.get('https://raw.githubusercontent.com/rtaserver/luci-app-rakitiw/main/changelog.txt', function (changelogData) {
-                            // Find the version in Changelog
-                            var versionIndex = changelogData.indexOf('**Changelog** V' + latestVersion);
-                            if (versionIndex !== -1) {
-                                // Get Changelog entries starting from the found version
-                                var changelog = changelogData.substring(versionIndex);
-                                $('#changelogContent').html(changelog);
-                            } else {
-                                $('#changelogContent').html('Changelog not found for this version.');
-                            }
-                        });
-                    }
-                }).fail(function () {
-                    // Jika koneksi gagal atau ada kesalahan lain dalam memeriksa pembaruan
-                    console.error('Failed to check for update.');
-                });
-            }
-
-            // Panggil fungsi untuk memeriksa pembaruan ketika dokumen selesai dimuat
-            checkUpdate();
-        });
     </script>
-
 </head>
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update Available</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5>Changelog:</h5>
-                <pre id="changelogContent"></pre>
-            </div>
-            <div class="modal-footer">
-                <a href="https://github.com/rtaserver/luci-app-rakitiw/releases/latest" target="_blank"
-                    class="btn btn-primary">Download Dan Update</a>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<body>
+<body class="box_script" style="text-align:center">
     <div id="app">
         <?php include ('navbar.php'); ?>
         <form id="myForm" method="POST" class="mt-5">
@@ -249,8 +361,8 @@ foreach ($linesnetwork as $linenetwork) {
                 <div class="row py-2">
                     <div class="col-lg-8 col-md-9 mx-auto mt-3">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="text-center">
+                        	<table class="status">
+                            <div class="blink">
                                     <h4><i class="fa fa-home"></i> RAKITAN MANAGER</h4>
                                 </div>
                             </div>
@@ -264,23 +376,54 @@ foreach ($linesnetwork as $linenetwork) {
                                         </div>
                                         <br>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6">
+                                            <?php if ($variables['modem_status'] == 'Enabled'): ?>
+                                                <span class="geser">Status: <span class="text-success">
+                                                    <?= $variables['modem_status'] ?>
+                                                </span></span>
+                                            <?php else: ?>
+                                                <span class="geser">Status: <span class="text-danger">
+                                                    <?= $variables['modem_status'] ?>
+                                                </span></span>
+                                                <?php endif; ?>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                        	<span class="gesert">
+                                            <i class="fa fa-server"></i>
+                                            <span class="text-primary">IP: {{ wan_ip }}</span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 d-sm-block d-md-block d-lg-none">
+                                        	<span class="gesert">
+                                            <i class="fa fa-globe"></i>
+                                            <span class="text-primary">ISP: {{ wan_isp }}</span>
+                                            </span>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 pb-lg-1">
+                                        	<span class="gesert">
+                                            <i class="fa fa-flag-o"></i>
+                                            <span class="text-primary">Location : {{ wan_country }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                        </div>
                                     <div class="container-fluid">
                                         <div class="container mt-5">
 
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <button type="button" class="btn btn-primary btn-block mb-3"
+                                                        <button type="button" class="geser"
                                                             data-toggle="modal" data-target="#tambahModemModal" <?php if ($variables['modem_status'] == 'Enabled')
                                                                 echo 'disabled'; ?>>Tambah Modem</button>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <form method="POST">
                                                             <?php if ($variables['modem_status'] == 'Enabled'): ?>
-                                                                <button type="submit" class="btn btn-danger btn-block mb-3"
+                                                                <button type="submit" class="btn geser"
                                                                     name="disable">Stop Modem</button>
                                                             <?php else: ?>
-                                                                <button type="submit" class="btn btn-success btn-block mb-3"
+                                                                <button type="submit" class="btn geser"
                                                                     name="enable" <?php echo $start_button_disabled; ?>>Start Modem</button>
                                                             <?php endif; ?>
                                                         </form>
@@ -317,8 +460,8 @@ foreach ($linesnetwork as $linenetwork) {
                                             <form method="POST" class="mt-5">
                                                 <div class="row">
                                                     <div class="col pt-2">
-                                                        <pre id="logContent" class="form-control text-left"
-                                                            style="height: 200px; width: auto; font-size:80%; background-image-position: center; background-color: #f8f9fa "></pre>
+                                                        <pre id="logContent" class="geser"
+                                                            style="height: 200px; width: auto; font-size:80%; background-image-position: right; background-color: #f8f9fa "></pre>
                                                     </div>
                                                 </div>
                                             </form>
@@ -370,25 +513,8 @@ foreach ($linesnetwork as $linenetwork) {
                                                             <div class="form-group" id="rakitan_field">
                                                                 <label for="apn">APN:</label>
                                                                 <input type="text" id="apn" name="apn"
-                                                                    class="form-control" placeholder="internet"
-                                                                    value="internet">
-                                                                <label for="portmodem">Pilih Port Modem:</label>
-                                                                <select name="portmodem" id="portmodem"
-                                                                    class="form-control">
-                                                                    <?php
-                                                                    // Deteksi port serial untuk modem GSM
-                                                                    $serial_ports = glob("/dev/ttyUSB*") + glob("/dev/ttyACM*");
-
-                                                                    if (empty($serial_ports)) {
-                                                                        echo "<option value=''>Tidak ada port serial yang terdeteksi</option>";
-                                                                    } else {
-                                                                        foreach ($serial_ports as $portmodem) {
-                                                                            echo "<option value='$portmodem'>$portmodem</option>";
-                                                                        }
-                                                                    }
-                                                                    ?>
-                                                                </select>
-                                                                <label for="interface">Interface Modem Manager:</label>
+                                                                    class="form-control" placeholder="internet">
+                                                                <label for="interface">Interface Modem:</label>
                                                                 <select name="interface" id="interface"
                                                                     class="form-control">
                                                                     <?php
@@ -398,37 +524,37 @@ foreach ($linesnetwork as $linenetwork) {
                                                                     }
                                                                     ?>
                                                                 </select>
+                                                                <label for="portat">Port Modem AT Command:</label>
+                                                                <input type="text" id="portat" name="portat"
+                                                                    class="form-control" placeholder="/dev/ttyUSB0">
                                                             </div>
                                                             <div class="form-group" id="orbit_field">
                                                                 <label for="iporbit">IP Modem:</label>
                                                                 <input type="text" id="iporbit" name="iporbit"
-                                                                    class="form-control" placeholder="192.168.8.1"
-                                                                    value="192.168.8.1">
+                                                                    class="form-control" placeholder="192.168.8.1">
                                                                 <label for="usernameorbit">Username:</label>
                                                                 <input type="text" id="usernameorbit"
                                                                     name="usernameorbit" class="form-control"
-                                                                    placeholder="admin" value="admin">
+                                                                    placeholder="admin">
                                                                 <label for="passwordorbit">Password:</label>
                                                                 <input type="text" id="passwordorbit"
                                                                     name="passwordorbit" class="form-control"
-                                                                    placeholder="admin" value="admin">
+                                                                    placeholder="admin">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="hostbug">Host / Bug Untuk Ping | Multi
                                                                     Host:</label>
                                                                 <input type="text" id="hostbug" name="hostbug"
                                                                     class="form-control"
-                                                                    placeholder="1.1.1.1 8.8.8.8 google.com"
-                                                                    value="google.com facebook.com">
+                                                                    placeholder="1.1.1.1 8.8.8.8 google.com">
                                                                 <label for="devicemodem">Device Modem Untuk Cek
                                                                     PING:</label>
                                                                 <input type="text" id="devicemodem" name="devicemodem"
-                                                                    class="form-control" placeholder="eth1"
-                                                                    value="eth1">
+                                                                    class="form-control" placeholder="eth1">
                                                                 <label for="delayping">Jeda Waktu Detik | Sebelum
                                                                     Melanjutkan Cek PING:</label>
                                                                 <input type="text" id="delayping" name="delayping"
-                                                                    class="form-control" placeholder="15" value="20">
+                                                                    class="form-control" placeholder="15">
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -489,24 +615,7 @@ foreach ($linesnetwork as $linenetwork) {
                                                                 <label for="edit_apn">APN:</label>
                                                                 <input type="text" id="edit_apn" name="edit_apn"
                                                                     class="form-control" placeholder="internet">
-                                                                <label for="edit_portmodem">Pilih Port Modem:</label>
-                                                                <select name="edit_portmodem" id="edit_portmodem"
-                                                                    class="form-control">
-                                                                    <?php
-                                                                    // Deteksi port serial untuk modem GSM
-                                                                    $serial_ports = glob("/dev/ttyUSB*") + glob("/dev/ttyACM*");
-
-                                                                    if (empty($serial_ports)) {
-                                                                        echo "<option value=''>Tidak ada port serial yang terdeteksi</option>";
-                                                                    } else {
-                                                                        foreach ($serial_ports as $portmodem) {
-                                                                            echo "<option value='$portmodem'>$portmodem</option>";
-                                                                        }
-                                                                    }
-                                                                    ?>
-                                                                </select>
-                                                                <label for="edit_interface">Interface Modem
-                                                                    Manager:</label>
+                                                                <label for="edit_interface">Interface Modem:</label>
                                                                 <select name="edit_interface" id="edit_interface"
                                                                     class="form-control">
                                                                     <?php
@@ -516,6 +625,9 @@ foreach ($linesnetwork as $linenetwork) {
                                                                     }
                                                                     ?>
                                                                 </select>
+                                                                <label for="edit_portat">Port Modem AT Command:</label>
+                                                                <input type="text" id="edit_portat" name="edit_portat"
+                                                                    class="form-control" placeholder="/dev/ttyUSB0">
                                                             </div>
                                                             <div class="form-group" id="edit_orbit_field">
                                                                 <label for="edit_iporbit">IP Modem:</label>
@@ -565,18 +677,18 @@ foreach ($linesnetwork as $linenetwork) {
                         </div>
                     </div>
                 </div>
-                <?php include ('footer.php'); ?>
             </div>
         </form>
     </div>
     <?php include ("javascript.php"); ?>
+    <script src="js/index.js"></script>
     <script>
         function editModem(index) {
             var modem = <?= json_encode($modems) ?>[index];
             $('#edit_nama').val(modem.nama);
             $('#edit_apn').val(modem.apn);
-            $('#edit_portmodem').val(modem.portmodem);
             $('#edit_interface').val(modem.interface);
+            $('#edit_portat').val(modem.portat);
             $('#edit_iporbit').val(modem.iporbit);
             $('#edit_usernameorbit').val(modem.usernameorbit);
             $('#edit_passwordorbit').val(modem.passwordorbit);
@@ -667,8 +779,8 @@ foreach ($linesnetwork as $linenetwork) {
             var jenis = document.querySelector('input[name="jenis"]:checked');
             var nama = document.getElementById("nama").value.trim();
             var apn = document.getElementById("apn").value.trim();
-            var portmodem = document.getElementById("portmodem").value.trim();
             var interface = document.getElementById("interface").value.trim();
+            var portat = document.getElementById("portat").value.trim();
             var iporbit = document.getElementById("iporbit").value.trim();
             var usernameorbit = document.getElementById("usernameorbit").value.trim();
             var passwordorbit = document.getElementById("passwordorbit").value.trim();
@@ -686,6 +798,10 @@ foreach ($linesnetwork as $linenetwork) {
             }
             if (jenis.value === "rakitan" && apn === "") {
                 alert("APN harus diisi untuk modem rakitan!");
+                return false;
+            }
+            if (jenis.value === "rakitan" && portat === "") {
+                alert("Port modem AT Command harus diisi untuk modem rakitan!");
                 return false;
             }
             if (jenis.value === "orbit") {
@@ -712,8 +828,8 @@ foreach ($linesnetwork as $linenetwork) {
             var jenis = document.querySelector('input[name="edit_jenis"]:checked');
             var nama = document.getElementById("edit_nama").value.trim();
             var apn = document.getElementById("edit_apn").value.trim();
-            var portmodem = document.getElementById("edit_portmodem").value.trim();
             var interface = document.getElementById("edit_interface").value.trim();
+            var portat = document.getElementById("edit_portat").value.trim();
             var iporbit = document.getElementById("edit_iporbit").value.trim();
             var usernameorbit = document.getElementById("edit_usernameorbit").value.trim();
             var passwordorbit = document.getElementById("edit_passwordorbit").value.trim();
@@ -731,6 +847,10 @@ foreach ($linesnetwork as $linenetwork) {
             }
             if (jenis.value === "rakitan" && apn === "") {
                 alert("APN harus diisi untuk modem rakitan!");
+                return false;
+            }
+            if (jenis.value === "rakitan" && portat === "") {
+                alert("Port modem AT Command harus diisi untuk modem rakitan!");
                 return false;
             }
             if (jenis.value === "orbit") {
@@ -754,6 +874,8 @@ foreach ($linesnetwork as $linenetwork) {
             return true;
         }
     </script>
+    <?php include ('footer.php'); ?>
+    	</table>
 </body>
 
 </html>
