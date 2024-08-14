@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright 2024 RTA SERVER
 
-log_file="/var/log/rakitanmanager.log"
+log_file="/var/log/tes.log"
 exec 1>>"$log_file" 2>&1
 log() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $1"
